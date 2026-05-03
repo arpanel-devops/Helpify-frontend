@@ -152,33 +152,34 @@ async function handleLogin(e) {
 }
 // SEND OTP
 async function sendOtp(e) {
+    console.log("STEP 1: function called");
+
     const email = document.getElementById("fpEmail").value;
-    const btn = e.target;
+    console.log("STEP 2: email =", email);
 
-    if (!email) {
-        showMsg("Enter email first", "error");
-        return;
-    }
-
-    btn.disabled = true;
+    const btn = e?.target;
+    if (btn) btn.disabled = true;
 
     try {
         const res = await fetch(`${API_BASE}/forgot-password?email=${email}`, {
             method: "POST"
         });
 
+        console.log("STEP 3: API called");
+
         const text = await res.text();
+        console.log("STEP 4: response =", text);
 
         if (!res.ok) throw new Error(text);
 
-        showMsg("OTP sent to email 📩", "success");
+        console.log("STEP 5: success reached");
 
-        // 🔥 THIS WAS NOT RUNNING BEFORE
         document.getElementById("resetFields").style.display = "block";
+        console.log("STEP 6: UI updated");
 
     } catch (err) {
-        showMsg(err.message, "error");
-        btn.disabled = false;
+        console.error("ERROR:", err);
+        if (btn) btn.disabled = false;
     }
 }
 // RESET PASSWORD
