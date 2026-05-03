@@ -151,9 +151,9 @@ async function handleLogin(e) {
     }
 }
 // SEND OTP
-async function sendOtp() {
+async function sendOtp(e) {
     const email = document.getElementById("fpEmail").value;
-    const btn = event.target;
+    const btn = e.target;
 
     if (!email) {
         showMsg("Enter email first", "error");
@@ -173,11 +173,12 @@ async function sendOtp() {
 
         showMsg("OTP sent to email 📩", "success");
 
+        // 🔥 THIS WAS NOT RUNNING BEFORE
         document.getElementById("resetFields").style.display = "block";
 
     } catch (err) {
         showMsg(err.message, "error");
-        btn.disabled = false; // allow retry if failed
+        btn.disabled = false;
     }
 }
 // RESET PASSWORD
